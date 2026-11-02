@@ -1,4 +1,4 @@
-# Ex. No:1b 			Study of Client Server Chat Applications
+# Ex. No:1b Study of Client Server Chat Applications
 
 ## Aim: 
 To perform a study on Client Server Chat Applications
@@ -71,7 +71,79 @@ User authentication mechanisms are essential to ensure secure and authorized acc
 
 Client-server chat applications are versatile tools that facilitate real-time communication between users over a network. They incorporate various components, including server-side and client-side elements, and must consider factors such as security, scalability, and concurrency. As technology continues to advance, client-server chat applications remain integral for collaborative communication in various domains.
 
-Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
+Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity
+.
+## Program:
+## Server Side:
+```
+import socket
+from datetime import datetime
+
+# Create server socket
+s = socket.socket()
+
+# Bind server to port 8000
+s.bind(('localhost', 8000))
+
+# Listen for client connection
+s.listen(5)
+
+print("Server is waiting for a connection...")
+
+# Accept client connection
+c, addr = s.accept()
+
+print("Connected by", addr)
+
+# Get current date and time
+now = datetime.now()
+
+# Send message and date/time to client
+message = "Hello from the server!\n"
+message += "Date and Time: " + now.strftime("%d/%m/%Y %H:%M:%S")
+
+c.send(message.encode())
+
+# Receive acknowledgement
+ack = c.recv(1024).decode()
+
+if ack:
+    print("Received from client:", ack)
+
+# Close connections
+c.close()
+s.close()
+
+```
+## Client Side:
+```
+
+import socket
+
+# Create client socket
+s = socket.socket()
+
+# Connect to server
+s.connect(('localhost', 8000))
+
+# Display client address
+print("Client connected from:", s.getsockname())
+
+# Receive message from server
+data = s.recv(1024).decode()
+
+print("Received from server:", data)
+
+# Send acknowledgement
+s.send("Acknowledgement received from the client.".encode())
+
+# Close socket
+s.close()
+
+```
+## Output:
+<img width="1917" height="1198" alt="Screenshot 2026-11-02 105458" src="https://github.com/user-attachments/assets/35da7029-eacc-4054-a6ba-0171b246cad2" />
+<img width="1917" height="1198" alt="Screenshot 2026-11-02 105503" src="https://github.com/user-attachments/assets/0183cf14-aafc-419a-94fe-a561d4740a10" />
 
 
 ## Result:
